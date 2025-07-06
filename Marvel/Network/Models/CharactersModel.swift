@@ -13,6 +13,8 @@ struct CharactersModel: Decodable {
 
 struct CharacterResultsModel: Decodable {
     let results: [Character]?
+    let total: Int?
+    let count: Int?
 }
 
 struct Character: Decodable {
