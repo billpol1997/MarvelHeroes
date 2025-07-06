@@ -7,3 +7,7 @@
 
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+API_BASE_URL = https://gateway.marvel.com/v1/public/characters
+API_PUBLIC_KEY = 71e742407ca8b4ac76c4917a1c199a09
+API_PRIVATE_KEY = 67a407d72945a9b1ee019145174ae42a02b7117d

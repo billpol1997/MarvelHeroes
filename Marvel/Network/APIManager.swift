@@ -11,28 +11,46 @@ import CryptoKit
 
 final class APIManager {
     let networkService = GenericAPICall()
-    let url = "https://gateway.marvel.com/v1/public/characters"
-    let publicKey = "71e742407ca8b4ac76c4917a1c199a09"
-    let privateKey = "67a407d72945a9b1ee019145174ae42a02b7117d"
+    let url = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String
+    let publicKey = Bundle.main.object(forInfoDictionaryKey: "API_PUBLIC_KEY") as? String
+    let privateKey = Bundle.main.object(forInfoDictionaryKey: "API_PRIVATE_KEY") as? String
     
     static let shared = APIManager()
     
     func fetchCharactedListData() async throws -> CharactersModel {
-        let headers: HTTPHeaders = [
-            "accept" : "application/json"
-        ]
-        
-        let timestamp = String(NSDate().timeIntervalSince1970)
-        let hash = (timestamp + privateKey + publicKey).md5
-        
-        let parameters: Parameters = [
-            "apikey": publicKey,
-            "ts": timestamp,
-            "hash": hash
-        ]
-        
-        let data: CharactersModel = try await networkService.fetchData(from: url, method: .get, headers: headers, parameters: parameters ,responseModel: CharactersModel.self)
-        return data
+        if let url = url, let publicKey = publicKey, let privateKey = privateKey {
+            let headers: HTTPHeaders = [
+                "accept" : "application/json"
+            ]
+            
+            let timestamp = String(NSDate().timeIntervalSince1970)
+            let hash = (timestamp + privateKey + publicKey).md5
+            
+            let parameters: Parameters = [
+                "apikey": publicKey,
+                "ts": timestamp,
+                "hash": hash
+            ]
+            
+            let data: CharactersModel? = try? await networkService.fetchData(from: url, method: .get, headers: headers, parameters: parameters ,responseModel: CharactersModel.self)
+            if let data {
+                return data
+            } else {
+                return try await fetchFromJSON()
+            }
+        } else {
+            return try await fetchFromJSON()
+        }
+    }
+    
+    func fetchFromJSON() async throws -> CharactersModel {
+        // Fallback: Load from local JSON
+        guard let path = Bundle.main.path(forResource: "characters", ofType: "json") else {
+            throw NSError(domain: "APIManager", code: 404, userInfo: [NSLocalizedDescriptionKey: "Local JSON file not found"])
+        }
+        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        let decoded = try JSONDecoder().decode(CharactersModel.self, from: data)
+        return decoded
     }
 }
 

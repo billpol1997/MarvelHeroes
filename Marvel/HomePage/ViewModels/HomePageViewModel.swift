@@ -9,9 +9,9 @@ import Foundation
 import Combine
 
 final class HomePageViewModel: ObservableObject {
-    private (set) var list: [Character]? = []
-    private (set) var squadList: [SquadModel] = []
-    private (set) var showErrorView: Bool = false
+    private(set) var list: [Character]? = []
+    private(set) var squadList: [SquadModel] = []
+    private(set) var showErrorView: Bool = false
     private var response: CharactersModel?
     private var manager = APIManager.shared
     private var dataFactory = DataFactory()
