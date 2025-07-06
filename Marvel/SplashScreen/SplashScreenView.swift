@@ -9,12 +9,11 @@ import SwiftUI
 
 struct SplashScreenView: View {
     @State private var navigateToHomePage: Bool = false
-    @State private var homePage: HomePageView?
    
     var body: some View {
         content
             .background(Color.black)
-        NavigationLink(destination: homePage,
+        NavigationLink(destination: DIContainer.shared.getContainerSwinject().resolve(HomePageView.self)!,
                        isActive: self.$navigateToHomePage,
                        label: { EmptyView() } ).hidden()
     }
@@ -29,8 +28,6 @@ struct SplashScreenView: View {
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.75) {
-                let homeViewModel = HomePageViewModel()
-                self.homePage = HomePageView(viewModel: homeViewModel)
                 self.navigateToHomePage = true
             }
         }

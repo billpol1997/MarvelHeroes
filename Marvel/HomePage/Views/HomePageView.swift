@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct HomePageView: View {
-    @ObservedObject var viewModel: HomePageViewModel
+    @StateObject var viewModel: HomePageViewModel
     @State private var navigateToCharacterPage: Bool = false
     @State private var characterPage: CharacterPageView?
     @State private var collapsedSquad: Bool = false
     @State private var scrollPosition: CGPoint = .zero
+    
+    //MARK: Init
+    init(viewModel: HomePageViewModel) {
+        self._viewModel = StateObject(wrappedValue: DIContainer.shared.getContainerSwinject().resolve(HomePageViewModel.self)!)
+    }
 
     // MARK: - Body
     var body: some View {
@@ -78,8 +83,7 @@ struct HomePageView: View {
     var characterList: some View {
         ScrollView {
             LazyVStack {
-                ForEach(viewModel.list.indices, id: \.self) { index in
-                    let character = viewModel.list[index]
+                ForEach(Array(viewModel.list.enumerated()), id: \.element.id) { index, character in
                     HeroView(
                         image: viewModel.httpsConversion(url: character.thumbnail?.path ?? ""),
                         name: character.name ?? "Unknown"
@@ -97,8 +101,8 @@ struct HomePageView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 16)
                     .onAppear {
-                        // Infinite scroll trigger
-                        if index == viewModel.list.count - 5 &&
+                        // Infinite scroll trigger when 5 from the end
+                        if index >= viewModel.list.count - 5 &&
                             viewModel.canLoadMorePages &&
                             viewModel.isLoadingPage.not() {
                             Task {
@@ -139,6 +143,7 @@ struct HomePageView: View {
         }
     }
 
+
     // MARK: - Squad List
     @ViewBuilder
     var squadList: some View {
@@ -172,7 +177,7 @@ struct HomePageView: View {
                                     addSquadMember: { viewModel.addSquadMember(character: char) },
                                     removeSquadMember: { viewModel.removeSquadMember(character: char) }
                                 )
-                                self.characterPage = CharacterPageView(viewModel: characterViewModel)
+                                
                                 self.navigateToCharacterPage = true
                             }
                         }

@@ -14,7 +14,7 @@ struct MarvelApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                SplashScreenView()
+                DIContainer.shared.getContainerSwinject().resolve(SplashScreenView.self)!
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
