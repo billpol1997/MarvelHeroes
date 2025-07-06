@@ -2,7 +2,7 @@
 //  CharacterPageUnitTests.swift
 //  MarvelTests
 //
-//  Created by Vasilis Polyzos on 7/4/24.
+//  Created by Vasilis Polyzos on 6/7/25.
 //
 
 import XCTest

@@ -2,14 +2,14 @@
 //  CharacterPageViewModel.swift
 //  Marvel
 //
-//  Created by Vasilis Polyzos on 5/4/24.
+//  Created by Vasilis Polyzos on 6/7/25.
 //
 
 import Foundation
 
 final class CharacterPageViewModel: ObservableObject {
    @Published var isInSquad: Bool
-    private (set) var character: Character
+    private(set) var character: Character
     private let defaults = UserDefaults.standard
     private var dataFactory = DataFactory()
     let addSquadMember: () -> ()
@@ -33,7 +33,7 @@ final class CharacterPageViewModel: ObservableObject {
     }
     
     func changeSquadList() {
-        !isInSquad ? addInSquad() : kickOutFromSquad()
+        isInSquad.not() ? addInSquad() : kickOutFromSquad()
     }
     
     func httpsConversion(url: String) -> String {

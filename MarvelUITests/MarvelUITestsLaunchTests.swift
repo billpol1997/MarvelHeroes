@@ -2,7 +2,7 @@
 //  MarvelUITestsLaunchTests.swift
 //  MarvelUITests
 //
-//  Created by Vasilis Polyzos on 5/4/24.
+//  Created by Vasilis Polyzos on 6/7/25.
 //
 
 import XCTest

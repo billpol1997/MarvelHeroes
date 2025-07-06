@@ -2,7 +2,7 @@
 //  HomePageView.swift
 //  Marvel
 //
-//  Created by Vasilis Polyzos on 5/4/24.
+//  Created by Vasilis Polyzos on 6/7/25.
 //
 
 import SwiftUI
@@ -26,7 +26,7 @@ struct HomePageView: View {
             }
             .onReceive(viewModel.finishedLoading) { status in
                 showList = status
-                if !status {
+                if status.not() {
                     viewModel.loadSquadMembers()
                 }
             }
@@ -76,8 +76,8 @@ struct HomePageView: View {
     @ViewBuilder
     var characterList: some View {
         ScrollView {
-            if let list = viewModel.list, !list.isEmpty, !viewModel.showErrorView {
-                VStack {
+            if let list = viewModel.list, list.isEmpty.not(), viewModel.showErrorView.not() {
+                LazyVStack {
                     ForEach(list, id: \.id) { character in
                         HeroView(image: viewModel.httpsConversion(url: character.thumbnail?.path ?? ""), name: character.name ?? "Unknown")
                             .onTapGesture {
@@ -112,7 +112,7 @@ struct HomePageView: View {
     
     @ViewBuilder
     var squadList: some View {
-        if !viewModel.squadList.isEmpty, !viewModel.showErrorView, !self.collapsedSquad {
+        if viewModel.squadList.isEmpty.not(), viewModel.showErrorView.not(), self.collapsedSquad.not() {
             VStack(alignment: .leading) {
                 Text("My Squad")
                     .foregroundColor(.white)
