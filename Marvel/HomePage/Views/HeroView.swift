@@ -29,6 +29,8 @@ struct HeroView: View {
                 .font(.headline)
                 .fontWeight(.bold)
                 .lineLimit(1)
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("CharacterCell_\(name)")
 
             Spacer()
 

@@ -17,8 +17,8 @@ final class APIManager {
     
     static let shared = APIManager()
     
-    func fetchCharactedListData(limit: Int = 20, offset: Int = 0) async throws -> CharactersModel {
-        if let url = url, let publicKey = publicKey, let privateKey = privateKey {
+    func fetchCharactedListData(limit: Int = 20, offset: Int = 0, _ isInTesting: Bool = false) async throws -> CharactersModel {
+        if let url = url, let publicKey = publicKey, let privateKey = privateKey, isInTesting.not() {
             let headers: HTTPHeaders = [
                 "accept" : "application/json"
             ]

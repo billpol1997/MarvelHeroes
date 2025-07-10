@@ -30,13 +30,10 @@ struct GifViewer: UIViewRepresentable {
             print("Error")
         }
         
-        
-        
         return webview
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
         uiView.reload()
     }
-    
 }

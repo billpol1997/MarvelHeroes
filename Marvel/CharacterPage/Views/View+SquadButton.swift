@@ -15,6 +15,8 @@ struct SquadButton: View {
             )
                 .font(.headline)
                 .fontWeight(.semibold)
+                .accessibilityElement()
+                .accessibilityIdentifier("AddToSquadButton")
         }
         .frame(height: .large)
         .frame(maxWidth: .infinity)

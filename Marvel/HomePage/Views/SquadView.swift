@@ -20,6 +20,8 @@ struct SquadView: View {
                     .fontWeight(.bold)
                     .lineLimit(2)
                     .foregroundColor(.white)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("SquadCell_\(name)")
 
                 Spacer()
             }

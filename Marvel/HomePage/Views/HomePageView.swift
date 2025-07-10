@@ -46,6 +46,8 @@ struct HomePageView: View {
             mainContent
         }
         .background(Color.greyDark)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("HomePageView")
     }
 
     // MARK: - Header
@@ -55,8 +57,11 @@ struct HomePageView: View {
             Image("marvelLogo")
                 .resizable()
                 .frame(width: 80, height: 32)
+                .accessibilityIdentifier("marvelLogo")
             Spacer()
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("Header")
     }
 
     // MARK: - Divider
@@ -111,6 +116,8 @@ struct HomePageView: View {
                         }
                     }
                 }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("CharacterList")
                 if viewModel.isLoadingPage {
                     ProgressView()
                         .padding()
@@ -143,7 +150,6 @@ struct HomePageView: View {
         }
     }
 
-
     // MARK: - Squad List
     @ViewBuilder
     var squadList: some View {
@@ -156,6 +162,8 @@ struct HomePageView: View {
                     .font(.title3)
                     .fontWeight(.semibold)
                     .padding(.leading, 16)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("My Squad")
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 16) {
@@ -177,7 +185,7 @@ struct HomePageView: View {
                                     addSquadMember: { viewModel.addSquadMember(character: char) },
                                     removeSquadMember: { viewModel.removeSquadMember(character: char) }
                                 )
-                                
+                                self.characterPage = CharacterPageView(viewModel: characterViewModel)
                                 self.navigateToCharacterPage = true
                             }
                         }

@@ -9,5 +9,6 @@
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
 
 API_BASE_URL = https://gateway.marvel.com/v1/public/characters
-API_PUBLIC_KEY = 71e742407ca8b4ac76c4917a1c199a09
-API_PRIVATE_KEY = 67a407d72945a9b1ee019145174ae42a02b7117d
+API_PUBLIC_KEY = 2a574d72e083e2ee7bbd28cbebd7a590
+API_PRIVATE_KEY = 9f12c0fdeb84da7175f8509a55b85bafb9b22974
+

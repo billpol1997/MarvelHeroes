@@ -38,7 +38,7 @@ final class HomePageViewModel: ObservableObject {
         }
 
         do {
-            let response = try await manager.fetchCharactedListData(limit: pageSize, offset: currentOffset)
+            let response = try await manager.fetchCharactedListData(limit: pageSize, offset: currentOffset, CommandLine.arguments.contains("--ui-testing")) /// CommandLine arg is used for ui testing to trigger mock fetching instead of real data
             let newCharacters = response.data?.results ?? []
             self.total = response.data?.total ?? 0
 
@@ -82,5 +82,16 @@ final class HomePageViewModel: ObservableObject {
 
     func searchSquadMember(character: Character) -> Bool {
         self.squadList.contains { $0.name == character.name }
+    }
+}
+
+//MARK: - Unit Tests Extension
+extension HomePageViewModel {
+    func setList(list: [Character]) {
+        self.list = list
+    }
+    
+    func setSquadList(list: [SquadModel]) {
+        self.squadList = list
     }
 }

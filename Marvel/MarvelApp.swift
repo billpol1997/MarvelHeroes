@@ -11,6 +11,14 @@ import SwiftUI
 struct MarvelApp: App {
     let persistenceController = PersistenceController.shared
     
+    init() {
+        if CommandLine.arguments.contains("--reset-userdefaults") {
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: "Squad") /// clear squad when UITesting
+            defaults.synchronize()
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack{

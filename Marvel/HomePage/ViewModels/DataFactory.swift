@@ -13,7 +13,11 @@ final class DataFactory {
     let encoder = JSONEncoder()
     
     func httpsConversion(url: String) -> String {
-        return "https" + url.dropFirst(4)
+        if url.hasPrefix("https") {
+            return url
+        } else {
+            return "https" + url.dropFirst(4)
+        }
     }
     
     func characterToSquad(character: Character) -> SquadModel {
